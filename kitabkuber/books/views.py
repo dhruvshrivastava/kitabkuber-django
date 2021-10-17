@@ -44,8 +44,8 @@ class CategoryDetail(APIView):
 def search(request):
     query = request.data.get('query', '')
     if query:
-        products = Book.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
-        serializer = BookSerializer(products, many=True)
+        books = Book.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
+        serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
     else:
         return Response({"books": []})

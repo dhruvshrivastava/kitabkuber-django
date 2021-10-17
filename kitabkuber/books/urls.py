@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from product import views
+from books import views
 
 urlpatterns = [
     path('latest-books/', views.LatestBooksList.as_view()),
