@@ -22,6 +22,7 @@ class Book(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField()
     description = models.TextField(blank=True, null=True)
+    condition = models.CharField(max_length=100)
     mrp = models.IntegerField()
     rent = models.IntegerField()
     deposit = models.IntegerField()
