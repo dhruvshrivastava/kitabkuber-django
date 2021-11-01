@@ -23,6 +23,7 @@ class Book(models.Model):
     slug = models.SlugField()
     description = models.TextField(blank=True, null=True)
     condition = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='uploads/', blank=True, null=True)
     mrp = models.IntegerField()
     rent = models.IntegerField()
     deposit = models.IntegerField()

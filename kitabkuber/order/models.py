@@ -29,20 +29,3 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return '%s' % self.id
-
-        
-class Cart(models.Model):
-    user = models.ForeignKey(User, related_name='cart', on_delete=models.CASCADE)
-    number_of_items = models.IntegerField()
-    total_payable = models.IntegerField()
-
-    def __str__(self):
-        return self.number_of_items
-
-class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, related_name='cart_items', on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, related_name ='cart_items', on_delete=models.CASCADE)
-    rental_plan = models.CharField(max_length=1000)
-
-    def __str__(self):
-        return '%s' % self.id 

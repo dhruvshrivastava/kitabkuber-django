@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
-from .models import Order, OrderItem, Cart, CartItem
-
+from .models import Order, OrderItem
 from books.serializers import BookSerializer
 
 class MyOrderItemSerializer(serializers.ModelSerializer):    
@@ -67,60 +66,5 @@ class OrderSerializer(serializers.ModelSerializer):
         order = Order.objects.create(**validated_data)
 
         for item_data in items_data:
-            OrderItem.objects.create(order=order, **item_data)
-            
+            OrderItem.objects.create(order=order, **item_data) 
         return order
-
-class MyCartItemSerializer(serializers.ModelSerializer):    
-    book = BookSerializer()
-
-    class Meta:
-        model = CartItem
-        fields = (
-            "book",
-            "rental_plan",
-        )
-
-
-class MyCartSerializer(serializers.ModelSerializer):
-    items = MyCartItemSerializer(many=True)
-
-    class Meta:
-        model = Cart
-        fields = (
-            "id",
-            "total_payable",
-            "number_of_items",
-            "cart_items",
-
-        )
-
-class CartItemSerializer(serializers.ModelSerializer):    
-    class Meta:
-        model = CartItem
-        fields = (
-            "book",
-            "rental_plan",
-        )
-
-class CartSerializer(serializers.ModelSerializer):
-    items = CartItemSerializer(many=True)
-
-    class Meta:
-        model = Cart
-        fields = (
-            "id",
-            "total_payable",
-            "number_of_items",
-            "cart_items",
-
-        )
-    
-    def create(self, validated_data):
-        items_data = validated_data.pop('cart_items')
-        cart = Cart.objects.create(**validated_data)
-
-        for item_data in items_data:
-            CartItem.objects.create(cart=cart, **item_data)
-            
-        return cart

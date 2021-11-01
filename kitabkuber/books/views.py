@@ -10,7 +10,7 @@ from .serializers import BookSerializer, CategorySerializer
 
 class LatestBookDetail(APIView):
     def get(self, request, format=None):
-        books = Books.objects.all()
+        books = Book.objects.all()
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
 
