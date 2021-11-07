@@ -17,7 +17,7 @@ class LatestBookDetail(APIView):
 class BookDetail(APIView):
     def get_object(self, category_slug, book_slug):
         try:
-            return Book.objects.filter(category__slug=category.slug).get(slug=book_slug)
+            return Book.objects.filter(category__slug=category_slug).get(slug=book_slug)
         except Book.DoesNotExist:
             raise Http404
 

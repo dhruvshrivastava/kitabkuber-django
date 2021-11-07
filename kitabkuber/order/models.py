@@ -8,10 +8,19 @@ class Order(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
+    address = models.CharField(max_length=20000)
+    city = models.CharField(max_length=2000)
+    state = models.CharField(max_length=2000)
     pincode = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
-    paid_amount = models.IntegerField()
+    book_name = models.CharField(max_length=20000)
+    mrp = models.IntegerField()
+    rent = models.IntegerField()
+    deposit = models.IntegerField()
+    type = models.CharField(max_length=10)
+    rental_period = models.CharField(max_length=10)
+    thumbnail = models.CharField(max_length=2000000000)
 
     class Meta:
         ordering = ['-created_at',]
@@ -19,13 +28,4 @@ class Order(models.Model):
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, related_name ='items', on_delete=models.CASCADE)
-    mrp = models.IntegerField()
-    deposit = models.IntegerField()
-    rent = models.IntegerField()
-    rental_plan = models.CharField(max_length=100)
 
-    def __str__(self):
-        return '%s' % self.id
