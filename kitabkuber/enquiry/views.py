@@ -1,15 +1,16 @@
 from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework.decorators import api_view
 from .serializers import EnquirySerializer
 
+@api_view(['POST'])
 def submit_enquiry(request):
     serializer = EnquirySerializer(data=request.data)
 
     if serializer.is_valid():
 
         try:
-            serializer.save(user=request.user)
+            serializer.save()
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Exception:

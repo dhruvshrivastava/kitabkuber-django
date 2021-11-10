@@ -3,6 +3,6 @@ from enquiry import views
 
 
 urlpatterns = [
-    path("", views.submit_enquiry)
+    path("enquiry", views.submit_enquiry),
 
 ]
