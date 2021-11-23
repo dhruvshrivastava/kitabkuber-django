@@ -11,6 +11,8 @@ django-cors-headers = "*"
 pillow = "*"
 psycopg2 = "*"
 razorpay = "*"
+gunicorn = "*"
+django-heroku = "*"
 
 [dev-packages]
 
