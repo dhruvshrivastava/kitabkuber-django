@@ -28,7 +28,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'kitabkuber-django.herokuapp.com', 'kitabkuber-vue.herokuapp.com']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'kitabkuber-django.herokuapp.com', 'kitabkuber-vue.herokuapp.com','kitabkuber.com']
 
 
 # Application definition
@@ -53,7 +53,7 @@ INSTALLED_APPS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://kitabkuber-vue.herokuapp.com/",
+    "https://kitabkuber.com/",
 ]
 
 MIDDLEWARE = [
