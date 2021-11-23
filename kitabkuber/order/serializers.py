@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Order
+from .models import Order, rpOrder
 
 
 
@@ -24,9 +24,21 @@ class OrderSerializer(serializers.ModelSerializer):
             "deposit",
             "type",
             "rental_period",
-            "thumbnail"
+            "thumbnail",
+            "payment",
+            "total",
         )
     
     def create(self, validated_data):
         order = Order.objects.create(**validated_data)
         return order
+
+class rpOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = rpOrder
+        fields = (
+            "id",
+            "order_id",
+        )
+
+        

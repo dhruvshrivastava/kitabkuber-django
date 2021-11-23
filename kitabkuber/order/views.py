@@ -8,8 +8,13 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Order
-from .serializers import OrderSerializer
+from .models import Order, rpOrder
+from .serializers import OrderSerializer, rpOrderSerializer
+import razorpay
+from django.core.servers.basehttp import WSGIServer
+
+
+
 
 @api_view(['POST'])
 @authentication_classes([authentication.TokenAuthentication])
@@ -17,19 +22,36 @@ from .serializers import OrderSerializer
 def checkout(request):
     serializer = OrderSerializer(data=request.data)
 
-    if serializer.is_valid():
+    if serializer.is_valid(): 
+            try:
+                serializer.save(user=request.user)
 
-        try:
-            serializer.save(user=request.user)
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        except Exception:
-            print(serializer.errors)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response("Order created")
+            except Exception:
+                print(serializer.errors)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     print(serializer.errors)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
+@authentication_classes([authentication.TokenAuthentication])
+@permission_classes([permissions.IsAuthenticated])
+def create_razorpay_order(request):
+    amount = request.data["total"]
+    razorpay_client = razorpay.Client(auth=("rzp_test_nu2nF7P7OpVGhq", "zHZDfR4Yo8QBIjn2PZLzr811"))
+    razorpay_order = razorpay_client.order.create(dict(amount=amount,
+                                                       currency='INR',
+                                                       payment_capture='0'))
+    razorpay_order_id = razorpay_order['id']
+    WSGIServer.handle_error = lambda *args, **kwargs: None
+    print(razorpay_order_id)
+    rpOrder.objects.create(user=request.user, order_id = razorpay_order_id)
+    return Response(razorpay_order_id)
+    
+    
+    
+    
 class OrdersList(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
@@ -39,3 +61,12 @@ class OrdersList(APIView):
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data)
 
+
+class rpOrdersList(APIView):
+        authentication_classes = [authentication.TokenAuthentication]
+        permission_classes = [permissions.IsAuthenticated]
+        def get(self, request):
+            orders = rpOrder.objects.filter(user=request.user)
+            serializer = rpOrderSerializer(orders, many=True)
+            return Response(serializer.data)
+            

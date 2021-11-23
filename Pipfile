@@ -9,6 +9,8 @@ django-rest-framework = "*"
 djoser = "*"
 django-cors-headers = "*"
 pillow = "*"
+psycopg2 = "*"
+razorpay = "*"
 
 [dev-packages]
 
