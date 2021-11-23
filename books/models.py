@@ -41,18 +41,18 @@ class Book(models.Model):
     
     def get_image(self):
         if self.image:
-            return 'kitabkuber-django.herokuapp.com' + self.image.url
+            return 'https://kitabkuber-django.herokuapp.com' + self.image.url
         return ''
 
     def get_thumbnail(self):
         if self.thumbnail:
-            return 'kitabkuber-django.herokuapp.com' + self.thumbnail.url
+            return 'https://kitabkuber-django.herokuapp.com' + self.thumbnail.url
         else:
             if self.image:
                 self.thumbnail = self.make_thumbnail(self.image)
                 self.save()
 
-                return 'kitabkuber-django.herokuapp.com' + self.thumbnail.url
+                return 'https://kitabkuber-django.herokuapp.com' + self.thumbnail.url
             else:
                 return ''
 
