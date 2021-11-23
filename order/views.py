@@ -13,7 +13,7 @@ from .serializers import OrderSerializer, rpOrderSerializer
 import razorpay
 from django.core.servers.basehttp import WSGIServer
 
-
+import os 
 
 
 @api_view(['POST'])
@@ -39,7 +39,7 @@ def checkout(request):
 @permission_classes([permissions.IsAuthenticated])
 def create_razorpay_order(request):
     amount = request.data["total"]
-    razorpay_client = razorpay.Client(auth=("rzp_test_nu2nF7P7OpVGhq", "zHZDfR4Yo8QBIjn2PZLzr811"))
+    razorpay_client = razorpay.Client(auth=(os.environ["KEY_ID"], os.environ["KEY_SECRET"]))
     razorpay_order = razorpay_client.order.create(dict(amount=amount,
                                                        currency='INR',
                                                        payment_capture='0'))
