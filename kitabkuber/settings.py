@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'djoser',
     'whitenoise.runserver_nostatic',
+    'storages',
 
     'books',
     'order',
