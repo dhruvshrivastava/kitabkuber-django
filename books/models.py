@@ -25,8 +25,7 @@ class Book(models.Model):
     condition = models.CharField(max_length=100)
     image = models.ImageField(upload_to='uploads/', blank=True, null=True)
     mrp = models.IntegerField()
-    rent = models.IntegerField()
-    deposit = models.IntegerField()
+    discounted_mrp = models.IntegerField()
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
 

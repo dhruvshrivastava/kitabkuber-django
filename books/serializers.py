@@ -12,8 +12,7 @@ class BookSerializer(serializers.ModelSerializer):
             "description",
             "condition",
             "mrp",
-            "rent",
-            "deposit",
+            "discounted_mrp",
             "get_image",
             "get_thumbnail"
         )
