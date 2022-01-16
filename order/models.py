@@ -14,15 +14,7 @@ class Order(models.Model):
     pincode = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
-    book_name = models.CharField(max_length=20000)
-    mrp = models.IntegerField()
-    rent = models.IntegerField()
-    deposit = models.IntegerField()
-    type = models.CharField(max_length=10)
-    rental_period = models.CharField(max_length=10)
-    thumbnail = models.CharField(max_length=200000)
-    payment = models.CharField(max_length=5000)
-    total = models.IntegerField()
+    paid_amount = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
 
     class Meta:
         ordering = ['-created_at',]
@@ -30,12 +22,18 @@ class Order(models.Model):
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
-class rpOrder(models.Model):
-    user = models.ForeignKey(User, related_name='rp_order', on_delete=models.CASCADE)
-    order_id = models.CharField(max_length=2000000)
-    created_at = models.DateTimeField(auto_now_add=True)
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, related_name='items', on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    quantity = models.IntegerField(default=1)
 
-    class Meta: 
-        ordering = ['-created_at',]
+    def __str__(self):
+        return '%s' % self.id
 
+class RazorpayOrder(models.Model):
+    user = models.ForeignKey(User, related_name='razorpay_order', on_delete=models.CASCADE)
+    order_id = models.CharField(max_length=100000)
 
+    def __str__(self):
+        return '%s' % self.order_id
