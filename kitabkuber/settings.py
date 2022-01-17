@@ -54,7 +54,7 @@ INSTALLED_APPS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://www.kitabkuber.com", "http://www.kitabkuber.com"
+    "https://www.kitabkuber.com", "http://www.kitabkuber.com", "http://localhost:8080"
 ]
 
 MIDDLEWARE = [
